@@ -1,0 +1,12 @@
+[project]
+name = "python-colombia"
+version = "0.1.0"
+description = "Nuevo Portal Web Python Colombia"
+requires-python = ">=3.14"
+dependencies = [
+    "starlette",
+    "uvicorn"
+]
+
+[tool.uv]
+package = false
