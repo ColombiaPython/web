@@ -29,7 +29,7 @@ export default function Home() {
         {/* Logo */}
         <div className="logo-glow">
           <Image
-            src="/logo.png"
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo.png`}
             alt="Python Colombia"
             width={480}
             height={148}
