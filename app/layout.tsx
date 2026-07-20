@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import ConsoleInit from "./ConsoleInit";
 import "./globals.css";
+export { metadata, viewport } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,11 +13,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Python Colombia · Próximamente",
-  description: "Sitio web de la comunidad de Python Colombia. Una nueva plataforma está en camino.",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -27,7 +23,10 @@ export default function RootLayout({
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ConsoleInit />
+        {children}
+      </body>
     </html>
   );
 }
