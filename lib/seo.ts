@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     default: "Python Colombia | Comunidad Oficial de Python en Colombia",
     template: "%s | Python Colombia",
   },
-  description: "Python Colombia es la comunidad que reúne desarrolladores, estudiantes y empresas interesadas en Python. Aprende, comparte conocimiento, participa en eventos, talleres y contribuye al crecimiento del ecosistema Python en Colombia.",
+  description: "La comunidad oficial de Python en Colombia. Aprende, comparte y conecta con desarrolladores en eventos, talleres y proyectos open source.",
   applicationName: "Python Colombia",
   keywords: [
     "Python Colombia",
@@ -79,10 +79,10 @@ export const metadata: Metadata = {
     url: "https://python.org.co",
     siteName: "Python Colombia",
     title: "Python Colombia | Comunidad Oficial de Python en Colombia",
-    description: "Únete a la comunidad de Python más grande de Colombia. Aprende, comparte conocimiento, participa en eventos, talleres y conecta con otros desarrolladores.",
+    description: "Únete a la comunidad Python más grande de Colombia. Aprende, comparte y conecta con desarrolladores.",
     images: [
       {
-        url: asset("/images/seo/og-image.png"),
+        url: asset("/images/seo/og-image.jpg"),
         width: 1200,
         height: 630,
         alt: "Python Colombia",
@@ -93,6 +93,6 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Python Colombia",
     description: "La comunidad oficial de Python en Colombia.",
-    images: [asset("/images/seo/og-image.png")],
+    images: [asset("/images/seo/og-image.jpg")],
   },
 };
