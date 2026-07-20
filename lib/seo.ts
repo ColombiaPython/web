@@ -9,7 +9,6 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://python.org.co"),
   title: {
     default: "Python Colombia | Comunidad Oficial de Python en Colombia",
     template: "%s | Python Colombia",
