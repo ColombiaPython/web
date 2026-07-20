@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { asset } from "@/lib/assets";
 
 export default function Home() {
   return (
@@ -28,7 +29,7 @@ export default function Home() {
         {/* Logo */}
         <div className="logo-glow">
           <Image
-            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo.png`}
+            src={asset("/images/logo.png")}
             alt="Python Colombia"
             width={480}
             height={148}
@@ -79,7 +80,7 @@ export default function Home() {
         <p className="text-zinc-600 text-sm">
           © {new Date().getFullYear()} Python Colombia
           <span className="mx-2 text-zinc-700">·</span>
-          Comunidad de Python en Colombia
+          Comunidad de Python en Colombia ♥
         </p>
       </footer>
 
