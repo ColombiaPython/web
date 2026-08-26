@@ -1,11 +1,13 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Titillium_Web } from "next/font/google";
 import ConsoleInit from "./ConsoleInit";
 import "./globals.css";
 export { metadata, viewport } from "@/lib/seo";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// 300 detalles/lead · 400 cuerpo · 600 labels · 700 botones · 900 titulares
+const titillium = Titillium_Web({
+  variable: "--font-titillium",
   subsets: ["latin"],
+  weight: ["300", "400", "600", "700", "900"],
 });
 
 const geistMono = Geist_Mono({
@@ -21,7 +23,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${titillium.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <ConsoleInit />

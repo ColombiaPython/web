@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* Antes de los overrides dark de la sección Leaflet para ganar en el cascade */
+@import "leaflet/dist/leaflet.css";
 
 :root {
   --background: #0d0d1a;
@@ -8,104 +10,176 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-titillium);
   --font-mono: var(--font-geist-mono);
+}
+
+/* ── Paleta oficial (extraída de public/images/logo.png) ──
+   Tailwind v4 no usa tailwind.config.ts: los tokens se declaran aquí
+   y generan clases como bg-python-blue o text-accent-orange. */
+@theme {
+  /* Marca */
+  --color-python-blue: #306998;
+  --color-python-blue-light: #4b8bbe;
+  --color-python-yellow: #ffd43b;
+  --color-python-yellow-light: #ffe873;
+
+  /* Acentos del mosaico del logo */
+  --color-accent-red: #e24329;
+  --color-accent-orange: #f58220;
+  --color-accent-green: #2fb350;
+  --color-accent-purple: #5c4ee5;
+
+  /* Neutros (modo oscuro) */
+  --color-night: #0d0d1a;
+  --color-night-soft: #12122a;
+  --color-night-card: #16162e;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-titillium), "Segoe UI", Arial, sans-serif;
 }
 
-/* ── Blob decorativo ──────────────────────────────────────── */
-.blob {
+::selection {
+  background: var(--color-python-yellow);
+  color: var(--color-night);
+}
+
+/* ── Utilidades editoriales de marca ──────────────────── */
+
+/* Esquina inferior derecha cortada: contraste angular frente al mapa orgánico */
+@utility cut-corner {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 18px),
+    calc(100% - 18px) 100%,
+    0 100%
+  );
+}
+
+/* Corte diagonal inferior para portadas de eventos */
+@utility clip-diagonal {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), 0 100%);
+}
+
+/* Texto contorneado para marcas de agua */
+@utility text-stroke {
+  -webkit-text-stroke: 1px rgb(255 255 255 / 0.1);
+  color: transparent;
+}
+
+/* ── Animación de entrada al hacer scroll (componente Reveal) ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Leaflet (mapa del hero) ────────────────────────── */
+.leaflet-container {
+  background: var(--color-night);
+  font-family: inherit;
+}
+
+/* Marcador cuadrado del mosaico con anillo pulsante */
+.map-marker {
+  background: transparent;
+  border: 0;
+}
+
+.map-marker__dot {
   position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.13;
-  pointer-events: none;
-  will-change: transform;
+  inset: 0;
+  border: 2px solid var(--color-night);
 }
 
-.blob-blue {
-  width: 520px;
-  height: 520px;
-  background: #4584b6;
-  top: -160px;
-  left: -160px;
-  animation: blob-float 11s ease-in-out infinite;
+.map-marker__ring {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  animation: marker-pulse 2s ease-out infinite;
 }
 
-.blob-yellow {
-  width: 420px;
-  height: 420px;
-  background: #ffd43b;
-  top: -120px;
-  right: -120px;
-  animation: blob-float-reverse 13s ease-in-out infinite;
+@keyframes marker-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
 }
 
-.blob-red {
-  width: 360px;
-  height: 360px;
-  background: #e63329;
-  bottom: -120px;
-  left: 8%;
-  animation: blob-float 15s ease-in-out infinite 2s;
+@media (prefers-reduced-motion: reduce) {
+  .map-marker__ring {
+    animation: none;
+    opacity: 0;
+  }
 }
 
-.blob-green {
-  width: 300px;
-  height: 300px;
-  background: #4caf50;
-  bottom: -80px;
-  right: 6%;
-  animation: blob-float-reverse 12s ease-in-out infinite 1s;
+/* Popup acorde al estilo editorial (anguloso, sombra dura) */
+.leaflet-popup-content-wrapper {
+  background: var(--color-night);
+  color: var(--foreground);
+  border: 1px solid rgb(255 255 255 / 0.2);
+  border-radius: 0;
+  box-shadow: 8px 8px 0 0 rgb(0 0 0 / 0.45);
 }
 
-/* ── Animaciones de blob ──────────────────────────────────── */
-@keyframes blob-float {
-  0%, 100% { transform: translateY(0px) scale(1); }
-  50%       { transform: translateY(-28px) scale(1.06); }
+.leaflet-popup-content {
+  margin: 16px;
 }
 
-@keyframes blob-float-reverse {
-  0%, 100% { transform: translateY(0px) scale(1); }
-  50%       { transform: translateY(28px) scale(0.94); }
+.leaflet-popup-content p {
+  margin: 0;
 }
 
-/* ── Gradiente animado en el texto ───────────────────────── */
-.gradient-text {
-  background: linear-gradient(135deg, #ffd43b 0%, #4584b6 40%, #ffd43b 80%);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gradient-shift 5s ease infinite;
+.leaflet-popup-tip {
+  background: var(--color-night);
+  border: 1px solid rgb(255 255 255 / 0.2);
+  box-shadow: none;
 }
 
-@keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50%       { background-position: 100% 50%; }
+.leaflet-container a.leaflet-popup-close-button {
+  color: #a1a1aa;
 }
 
-/* ── Glow suave en el logo ───────────────────────────────── */
-.logo-glow {
-  filter: drop-shadow(0 0 32px rgba(69, 132, 182, 0.25));
-  transition: filter 0.4s ease;
+.leaflet-container a.leaflet-popup-close-button:hover {
+  color: #ffffff;
 }
 
-.logo-glow:hover {
-  filter: drop-shadow(0 0 48px rgba(255, 212, 59, 0.3));
+/* Atribución OSM/CARTO discreta sobre fondo oscuro */
+.leaflet-control-attribution {
+  background: rgb(13 13 26 / 0.85) !important;
+  color: #71717a;
+  font-size: 10px;
 }
 
-/* ── Badge «Próximamente» ────────────────────────────────── */
-@keyframes badge-ring {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 212, 59, 0.45); }
-  60%       { box-shadow: 0 0 0 10px rgba(255, 212, 59, 0); }
-}
-
-.badge-glow {
-  animation: badge-ring 2.8s ease-out infinite;
+.leaflet-control-attribution a {
+  color: #a1a1aa;
 }
