@@ -1,10 +1,18 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import ColombiaMap from "@/components/map/ColombiaMap";
 import Reveal from "@/components/ui/Reveal";
 import { MosaicBar } from "@/components/ui/MosaicBar";
 import { getMapMarkers } from "@/lib/api";
+import type { CommunityMarker } from "@/lib/types";
 
-export default async function Hero() {
-  const markers = await getMapMarkers();
+export default function Hero() {
+  const [markers, setMarkers] = useState<CommunityMarker[]>([]);
+
+  useEffect(() => {
+    void getMapMarkers().then((data) => setMarkers(data));
+  }, []);
 
   return (
     <section id="hero" className="relative overflow-hidden scroll-mt-24">

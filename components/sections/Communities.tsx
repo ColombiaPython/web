@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import CommunityGrid from "@/components/sections/CommunityGrid";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { getCommunities } from "@/lib/api";
+import type { Community } from "@/lib/types";
 
 /** Portadas de bloque sólido (mosaico del logo) con texto de contraste AA. */
 const COVERS = [
@@ -19,8 +23,12 @@ const HOVER_SHADOWS = [
   "hover:shadow-[8px_8px_0_0_var(--color-accent-purple)]",
 ] as const;
 
-export default async function Communities() {
-  const communities = await getCommunities();
+export default function Communities() {
+  const [communities, setCommunities] = useState<Community[]>([]);
+
+  useEffect(() => {
+    void getCommunities().then((data) => setCommunities(data));
+  }, []);
 
   return (
     <section id="comunidades" className="scroll-mt-24 py-24 lg:py-36">

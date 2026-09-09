@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { LuCalendar, LuClock3, LuMapPin, LuArrowUpRight } from "react-icons/lu";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -153,8 +156,12 @@ function EventCard({ event, index, isPast = false, featured = false }: EventCard
 // Snapshot al momento del build (export estático); se refresca en cada deploy.
 const BUILD_TIME = Date.now();
 
-export default async function Events() {
-  const events = await getEvents();
+export default function Events() {
+  const [events, setEvents] = useState<CommunityEvent[]>([]);
+
+  useEffect(() => {
+    void getEvents().then((data) => setEvents(data));
+  }, []);
   const upcoming = events
     .filter((event) => new Date(event.startsAt).getTime() >= BUILD_TIME)
     .sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime());

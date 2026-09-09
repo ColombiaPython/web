@@ -1,9 +1,13 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { LuHandshake } from "react-icons/lu";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { getSponsors } from "@/lib/api";
 import { CONTACT_EMAIL } from "@/lib/site";
+import type { Sponsor } from "@/lib/types";
 
 /** Cuadros de iniciales en bloques sólidos del mosaico (contraste AA). */
 const TILE_ACCENTS = [
@@ -21,8 +25,12 @@ function initials(name: string): string {
     .join("");
 }
 
-export default async function Sponsors() {
-  const sponsors = await getSponsors();
+export default function Sponsors() {
+  const [sponsors, setSponsors] = useState<Sponsor[]>([]);
+
+  useEffect(() => {
+    void getSponsors().then((data) => setSponsors(data));
+  }, []);
   const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
     "Quiero patrocinar a Python Colombia",
   )}`;
