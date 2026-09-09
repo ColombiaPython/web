@@ -1,9 +1,13 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { LuHandshake } from "react-icons/lu";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { mockSponsors } from "@/data/mockSponsors";
+import { getSponsors } from "@/lib/api";
 import { CONTACT_EMAIL } from "@/lib/site";
+import type { Sponsor } from "@/lib/types";
 
 /** Cuadros de iniciales en bloques sólidos del mosaico (contraste AA). */
 const TILE_ACCENTS = [
@@ -22,6 +26,11 @@ function initials(name: string): string {
 }
 
 export default function Sponsors() {
+  const [sponsors, setSponsors] = useState<Sponsor[]>([]);
+
+  useEffect(() => {
+    void getSponsors().then((data) => setSponsors(data));
+  }, []);
   const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
     "Quiero patrocinar a Python Colombia",
   )}`;
@@ -33,7 +42,6 @@ export default function Sponsors() {
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <Reveal>
             <SectionHeading
-              number="03"
               eyebrow="Patrocinadores"
               title="Impulsa el talento Python en Colombia"
               description="Tu marca frente a miles de desarrolladores en todo el país: visibilidad en eventos, meetups y canales de la comunidad, mientras apoyas el ecosistema tech local."
@@ -52,9 +60,9 @@ export default function Sponsors() {
           </Reveal>
         </div>
 
-        {mockSponsors.length > 0 ? (
+        {sponsors.length > 0 ? (
           <ul className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {mockSponsors.map((sponsor, index) => (
+            {sponsors.map((sponsor, index) => (
               <li key={sponsor.id} className="h-full">
                 <Reveal delay={(index % 4) * 80} className="h-full">
                   <a

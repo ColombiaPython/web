@@ -4,7 +4,7 @@ import { useState } from "react";
 import { LuLoaderCircle, LuMail } from "react-icons/lu";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { subscribeToNewsletter } from "@/lib/mock/newsletter";
+import { subscribeToNewsletter } from "@/lib/api";
 import type { NewsletterResponse, NewsletterStatus } from "@/lib/types";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -51,7 +51,6 @@ export default function Newsletter() {
             {/* Panel de marca en azul sólido */}
             <div className="relative bg-python-blue p-8 sm:p-10 lg:col-span-2">
               <SectionHeading
-                number="04"
                 eyebrow="Newsletter"
                 title="No te pierdas nada"
                 accentClass="text-python-yellow-light"

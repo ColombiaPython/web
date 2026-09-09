@@ -1,8 +1,6 @@
 import { MosaicBar } from "@/components/ui/MosaicBar";
 
 interface SectionHeadingProps {
-  /** Número editorial de la sección (ej. "01"). */
-  number: string;
   eyebrow: string;
   title: string;
   description?: string;
@@ -11,7 +9,6 @@ interface SectionHeadingProps {
 }
 
 export default function SectionHeading({
-  number,
   eyebrow,
   title,
   description,
@@ -22,7 +19,6 @@ export default function SectionHeading({
       <p
         className={`flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.35em] ${accentClass}`}
       >
-        {/* <span className="font-mono">{number}</span> */}
         <span aria-hidden="true" className="h-px w-10 bg-current" />
         {eyebrow}
       </p>

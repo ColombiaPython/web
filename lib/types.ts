@@ -1,9 +1,8 @@
 /**
  * Contratos de datos de la landing.
  *
- * Hoy se alimentan de los mocks en `data/` y `lib/mock/`; cuando exista la
- * API real, estos mismos tipos describirán sus respuestas para que el cambio
- * sea transparente para los componentes visuales.
+ * La API real puede responder con campos en snake_case o camelCase; el cliente
+ * HTTP normaliza esos datos a estos contratos antes de llegar a los componentes.
  */
 
 /** Marcador de comunidad sobre el mapa 3D de Colombia. */

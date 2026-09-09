@@ -1,9 +1,19 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import ColombiaMap from "@/components/map/ColombiaMap";
 import Reveal from "@/components/ui/Reveal";
 import { MosaicBar } from "@/components/ui/MosaicBar";
-import { mockMapMarkers } from "@/data/mockMapMarkers";
+import { getMapMarkers } from "@/lib/api";
+import type { CommunityMarker } from "@/lib/types";
 
 export default function Hero() {
+  const [markers, setMarkers] = useState<CommunityMarker[]>([]);
+
+  useEffect(() => {
+    void getMapMarkers().then((data) => setMarkers(data));
+  }, []);
+
   return (
     <section id="hero" className="relative overflow-hidden scroll-mt-24">
       {/* Marca de agua tipo prompt de Python */}
@@ -65,7 +75,7 @@ export default function Hero() {
 
         {/* El mapa sangra hacia el borde derecho para romper la grilla */}
         <Reveal delay={150} className="lg:col-span-7 lg:-mr-10 xl:-mr-20">
-          <ColombiaMap markers={mockMapMarkers} />
+          <ColombiaMap markers={markers} />
         </Reveal>
       </div>
     </section>

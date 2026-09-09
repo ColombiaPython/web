@@ -1,7 +1,12 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import CommunityGrid from "@/components/sections/CommunityGrid";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { mockCommunities } from "@/data/mockCommunities";
+import { getCommunities } from "@/lib/api";
+import type { Community } from "@/lib/types";
 
 /** Portadas de bloque sólido (mosaico del logo) con texto de contraste AA. */
 const COVERS = [
@@ -19,23 +24,27 @@ const HOVER_SHADOWS = [
 ] as const;
 
 export default function Communities() {
+  const [communities, setCommunities] = useState<Community[]>([]);
+
+  useEffect(() => {
+    void getCommunities().then((data) => setCommunities(data));
+  }, []);
+
   return (
     <section id="comunidades" className="scroll-mt-24 py-24 lg:py-36">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <Reveal>
           <SectionHeading
-            number="01"
             eyebrow="Comunidades"
             title="Una red que crece por todo el país"
             description="Grupos locales y temáticos donde compartir, aprender y construir con Python. Encuentra el tuyo o ayúdanos a crear uno nuevo."
           />
         </Reveal>
 
-        {/* La columna central baja en desktop para romper la grilla uniforme */}
-        <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:pb-10">
-          {mockCommunities.map((community, index) => (
-            <li key={community.id} className={index % 3 === 1 ? "lg:translate-y-10" : ""}>
-              <Reveal delay={(index % 3) * 90} className="h-full">
+        <CommunityGrid>
+          {communities.map((community, index) => (
+            <li key={community.id}>
+              <Reveal delay={(index % 4) * 90} className="h-full">
                 <article
                   className={`group flex h-full flex-col border border-white/10 bg-night-card transition hover:-translate-y-1 motion-reduce:hover:translate-y-0 ${HOVER_SHADOWS[index % HOVER_SHADOWS.length]}`}
                 >
@@ -70,18 +79,20 @@ export default function Communities() {
                     <p className="mt-2 flex-1 text-sm font-light leading-relaxed text-zinc-400">
                       {community.description}
                     </p>
-                    <button
-                      type="button"
+                    <a
+                      href={community.communityUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="mt-5 self-start border border-white/25 px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-zinc-200 transition hover:bg-python-yellow/10 group-hover:border-python-yellow group-hover:text-python-yellow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-python-yellow"
                     >
                       Ver comunidad
-                    </button>
+                    </a>
                   </div>
                 </article>
               </Reveal>
             </li>
           ))}
-        </ul>
+        </CommunityGrid>
       </div>
     </section>
   );
