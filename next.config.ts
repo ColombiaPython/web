@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const repoName = process.env.GITHUB_REPOSITORY?.split("/")[1];
 const basePath = process.env.GITHUB_ACTIONS && repoName ? `/${repoName}` : "";
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "https://pythonco.orionis-framework.com";
 
 const nextConfig: NextConfig = {
   output: "export",
