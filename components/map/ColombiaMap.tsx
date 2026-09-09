@@ -5,6 +5,8 @@ import { useState } from "react";
 import type { CommunityMarker } from "@/lib/types";
 import { markerColor } from "./marker-colors";
 
+const MAP_HMR_KEY = process.env.NODE_ENV === "development" ? Date.now().toString(36) : "map";
+
 const LeafletMap = dynamic(() => import("./LeafletMap"), {
   ssr: false,
   loading: () => <MapSkeleton />,
@@ -26,19 +28,20 @@ interface ColombiaMapProps {
 }
 
 /**
- * Mapa real de Colombia (Leaflet + CARTO Dark Matter) + chips de ciudades.
+ * Mapa real de Colombia (Leaflet + CARTO Dark Matter) + chips de comunidades.
  * Los chips permiten abrir cada popup con teclado y en táctil, como
  * alternativa accesible al click directo sobre el marcador.
  */
 export default function ColombiaMap({ markers }: ColombiaMapProps) {
   const [activeId, setActiveId] = useState<string | null>(null);
+  const mapKey = `${MAP_HMR_KEY}:${markers.map((marker) => marker.id).join("|")}`;
 
   return (
     <div className="w-full" role="region" aria-label="Mapa de comunidades de Python en Colombia">
       <div className="relative">
         {/* `isolate` encapsula los z-index de Leaflet para no tapar la navbar */}
         <div className="isolate h-[380px] w-full overflow-hidden border border-white/10 sm:h-[480px] lg:h-[560px]">
-          <LeafletMap markers={markers} activeId={activeId} onSelect={setActiveId} />
+          <LeafletMap key={mapKey} markers={markers} activeId={activeId} onSelect={setActiveId} />
         </div>
         {/* Bloques del mosaico anclados a las esquinas del contenedor */}
         <span aria-hidden="true" className="absolute -left-1.5 -top-1.5 h-3 w-3 bg-python-yellow" />
@@ -65,7 +68,7 @@ export default function ColombiaMap({ markers }: ColombiaMapProps) {
                   style={{ backgroundColor: markerColor(index) }}
                   aria-hidden="true"
                 />
-                {marker.city}
+                {marker.name}
               </button>
             </li>
           );

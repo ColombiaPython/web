@@ -1,3 +1,4 @@
+/** Mensaje de consola personalizado para Python Colombia */
 export function ConsoleMessage(): void {
   if (typeof window === "undefined") return;
 

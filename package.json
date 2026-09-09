@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node -e \"require('fs').rmSync('dist/dev',{recursive:true,force:true})\" && next dev --webpack",
     "build": "next build",
     "start": "npx serve dist",
     "lint": "eslint"

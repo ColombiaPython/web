@@ -1,9 +1,11 @@
 import ColombiaMap from "@/components/map/ColombiaMap";
 import Reveal from "@/components/ui/Reveal";
 import { MosaicBar } from "@/components/ui/MosaicBar";
-import { mockMapMarkers } from "@/data/mockMapMarkers";
+import { getMapMarkers } from "@/lib/api";
 
-export default function Hero() {
+export default async function Hero() {
+  const markers = await getMapMarkers();
+
   return (
     <section id="hero" className="relative overflow-hidden scroll-mt-24">
       {/* Marca de agua tipo prompt de Python */}
@@ -65,7 +67,7 @@ export default function Hero() {
 
         {/* El mapa sangra hacia el borde derecho para romper la grilla */}
         <Reveal delay={150} className="lg:col-span-7 lg:-mr-10 xl:-mr-20">
-          <ColombiaMap markers={mockMapMarkers} />
+          <ColombiaMap markers={markers} />
         </Reveal>
       </div>
     </section>

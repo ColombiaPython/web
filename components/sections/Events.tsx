@@ -2,7 +2,7 @@ import Image from "next/image";
 import { LuCalendar, LuClock3, LuMapPin, LuArrowUpRight } from "react-icons/lu";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { mockEvents } from "@/data/mockEvents";
+import { getEvents } from "@/lib/api";
 import type { CommunityEvent, EventMode } from "@/lib/types";
 
 const MODE_BADGES: Record<EventMode, string> = {
@@ -153,11 +153,12 @@ function EventCard({ event, index, isPast = false, featured = false }: EventCard
 // Snapshot al momento del build (export estático); se refresca en cada deploy.
 const BUILD_TIME = Date.now();
 
-export default function Events() {
-  const upcoming = mockEvents
+export default async function Events() {
+  const events = await getEvents();
+  const upcoming = events
     .filter((event) => new Date(event.startsAt).getTime() >= BUILD_TIME)
     .sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime());
-  const past = mockEvents
+  const past = events
     .filter((event) => new Date(event.startsAt).getTime() < BUILD_TIME)
     .sort((a, b) => new Date(b.startsAt).getTime() - new Date(a.startsAt).getTime());
 
@@ -169,7 +170,6 @@ export default function Events() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <Reveal>
           <SectionHeading
-            number="02"
             eyebrow="Eventos"
             title="Próximos encuentros de la comunidad"
             description="Charlas, talleres y meetups presenciales y virtuales. Haz click en cualquier evento para registrarte."

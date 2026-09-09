@@ -1,12 +1,9 @@
 /** Configuración estática del sitio: navegación, contacto y redes. */
 
 export const CONTACT_EMAIL = "colombiapython@gmail.com";
+export const CODE_OF_CONDUCT_URL = "https://github.com/ColombiaPython/codigo-de-conducta";
 
-export const CODE_OF_CONDUCT_URL =
-  "https://github.com/ColombiaPython/codigo-de-conducta";
-
-// TODO: cuando existan páginas propias (p. ej. /comunidades, /eventos),
-// convertir estos anchors en rutas reales de Next.js.
+/** Menú de navegación del sitio */
 export const NAV_LINKS = [
   { label: "Comunidades", href: "#comunidades" },
   { label: "Eventos", href: "#eventos" },
@@ -14,12 +11,14 @@ export const NAV_LINKS = [
   { label: "Newsletter", href: "#newsletter" },
 ] as const;
 
+/** Enlaces a redes sociales del sitio */
 export interface SocialLink {
   id: string;
   label: string;
   href: string;
 }
 
+/** Lista de enlaces a redes sociales del sitio */
 export const SOCIAL_LINKS: readonly SocialLink[] = [
   { id: "email", label: "Email", href: `mailto:${CONTACT_EMAIL}` },
   { id: "x", label: "X (Twitter)", href: "https://x.com/ColombiaPython" },
