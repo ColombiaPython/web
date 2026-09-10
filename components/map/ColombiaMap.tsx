@@ -43,9 +43,6 @@ export default function ColombiaMap({ markers }: ColombiaMapProps) {
         <div className="isolate h-[380px] w-full overflow-hidden border border-white/10 sm:h-[480px] lg:h-[560px]">
           <LeafletMap key={mapKey} markers={markers} activeId={activeId} onSelect={setActiveId} />
         </div>
-        {/* Bloques del mosaico anclados a las esquinas del contenedor */}
-        <span aria-hidden="true" className="absolute -left-1.5 -top-1.5 h-3 w-3 bg-python-yellow" />
-        <span aria-hidden="true" className="absolute -bottom-1.5 -right-1.5 h-3 w-3 bg-accent-red" />
       </div>
 
       <ul className="mt-3 flex flex-wrap justify-center gap-2" aria-label="Comunidades en el mapa">
