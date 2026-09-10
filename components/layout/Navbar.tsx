@@ -45,11 +45,11 @@ export default function Navbar() {
     >
       <MosaicStrip />
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+        {/* <a> nativo (no <Link>): fuerza una recarga completa del sitio */}
         <a
-          href="#hero"
+          href={asset("/")}
           aria-label="Python Colombia — ir al inicio"
           className="focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-python-yellow"
-          onClick={() => setOpen(false)}
         >
           <Image
             src={asset("/images/logo.png")}

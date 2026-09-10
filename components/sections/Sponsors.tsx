@@ -44,7 +44,7 @@ export default function Sponsors() {
             <SectionHeading
               eyebrow="Patrocinadores"
               title="Impulsa el talento Python en Colombia"
-              description="Tu marca frente a miles de desarrolladores en todo el país: visibilidad en eventos, meetups y canales de la comunidad, mientras apoyas el ecosistema tech local."
+              description="Tu marca frente a miles de desarrolladorxs en todo el país: visibilidad en eventos, meetups y canales de la comunidad, mientras apoyas el ecosistema tech local."
               accentClass="text-accent-green"
             />
           </Reveal>
