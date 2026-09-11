@@ -1,13 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { asset } from "@/lib/assets";
 
-function resolveMetadataBase(): URL {
-  if (process.env.GITHUB_ACTIONS && process.env.GITHUB_REPOSITORY) {
-    const owner = process.env.GITHUB_REPOSITORY.split("/")[0];
-    return new URL(`https://${owner}.github.io`);
-  }
-  return new URL("https://python.org.co");
-}
+const METADATA_BASE = new URL("https://python.org.co");
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -17,7 +11,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: resolveMetadataBase(),
+  metadataBase: METADATA_BASE,
   title: {
     default: "Python Colombia | Comunidad Oficial de Python en Colombia",
     template: "%s | Python Colombia",
